@@ -126,9 +126,9 @@ export const ScoreExplanationTrace: React.FC<ScoreExplanationTraceProps> = ({
             </div>
             <div className="flex flex-wrap gap-1 max-h-16 overflow-y-auto pr-1 font-mono">
               {trace.ticketKeys && trace.ticketKeys.length > 0 ? (
-                trace.ticketKeys.map((key) => (
+                Array.from(new Set(trace.ticketKeys)).map((key, idx) => (
                   <button
-                    key={key}
+                    key={`${key}-${idx}`}
                     type="button"
                     onClick={() => onViewTicket?.(key)}
                     className="px-2 py-0.5 bg-indigo-950 hover:bg-indigo-900 text-indigo-300 text-[10px] font-bold rounded-lg border border-indigo-800/80 transition-colors cursor-pointer"

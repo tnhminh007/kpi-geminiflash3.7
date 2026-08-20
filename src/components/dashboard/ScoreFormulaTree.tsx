@@ -490,11 +490,11 @@ export const ScoreFormulaTree: React.FC<ScoreFormulaTreeProps> = ({
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {selectedCriterion.evidenceTickets.map((key) => {
+                    {Array.from(new Set(selectedCriterion.evidenceTickets)).map((key, idx) => {
                       const issueDetail = allIssues.find((iss) => iss.key === key);
                       return (
                         <div
-                          key={key}
+                          key={`${key}-${idx}`}
                           onClick={() => onOpenTicket(key)}
                           className="p-3 bg-slate-900/90 hover:bg-slate-850 border border-slate-800 hover:border-indigo-500/50 rounded-xl transition-all cursor-pointer flex items-center justify-between group"
                         >

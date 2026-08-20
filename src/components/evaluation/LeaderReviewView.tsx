@@ -455,9 +455,9 @@ export const LeaderReviewView: React.FC<LeaderReviewViewProps> = ({
                 </div>
 
                 <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
-                  {activeCrit.evidenceTickets.map((key) => (
+                  {Array.from(new Set(activeCrit.evidenceTickets)).map((key, idx) => (
                     <button
-                      key={key}
+                      key={`${key}-${idx}`}
                       type="button"
                       onClick={() => onOpenTicket(key)}
                       className="w-full text-left p-2.5 bg-slate-900 hover:bg-indigo-950/50 hover:border-indigo-500/50 rounded-xl border border-slate-800 transition-colors flex items-center justify-between cursor-pointer"

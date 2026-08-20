@@ -225,6 +225,21 @@ class StateStore {
         const parsed = JSON.parse(saved);
         // Validate required fields
         if (parsed.teams && parsed.members && parsed.evaluations) {
+          // Deduplicate evidence tickets in loaded evaluations
+          if (Array.isArray(parsed.evaluations)) {
+            parsed.evaluations.forEach((ev: any) => {
+              if (Array.isArray(ev.criteriaEvaluations)) {
+                ev.criteriaEvaluations.forEach((c: any) => {
+                  if (Array.isArray(c.evidenceTickets)) {
+                    c.evidenceTickets = Array.from(new Set(c.evidenceTickets));
+                  }
+                  if (c.trace && Array.isArray(c.trace.ticketKeys)) {
+                    c.trace.ticketKeys = Array.from(new Set(c.trace.ticketKeys));
+                  }
+                });
+              }
+            });
+          }
           return parsed;
         }
       }

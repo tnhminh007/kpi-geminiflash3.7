@@ -375,9 +375,9 @@ export const MemberDashboard: React.FC<MemberDashboardProps> = ({
                                 Attributed Jira Issue Artifacts (Click to inspect snapshot):
                               </div>
                               <div className="flex flex-wrap gap-2 pt-1">
-                                {crit.evidenceTickets.map((key) => (
+                                {Array.from(new Set(crit.evidenceTickets)).map((key, idx) => (
                                   <button
-                                    key={key}
+                                    key={`${key}-${idx}`}
                                     type="button"
                                     onClick={(e) => {
                                       e.stopPropagation();

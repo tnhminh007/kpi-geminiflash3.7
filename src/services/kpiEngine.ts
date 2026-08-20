@@ -350,15 +350,17 @@ export function evaluateMember(
       (c) => c.criterionId === crit.id || c.criterionCode === crit.code
     );
 
+    const rawMetric = calculateCriterionMetric(crit, memberIssues);
+    const uniqueEvidenceKeys = Array.from(new Set(rawMetric.evidenceKeys));
+
     const {
       metricValue,
       metricFormatted,
       inputSummary,
       confidence,
       confidenceReasons,
-      evidenceKeys,
       factSnapshots,
-    } = calculateCriterionMetric(crit, memberIssues);
+    } = rawMetric;
 
     const ruleResult = evaluateScoringRule(metricValue, crit.maxScore, crit.scoringRule);
     const systemScore = crit.evaluationMethod === 'MANUAL' ? crit.maxScore * 0.85 : ruleResult.score;
@@ -372,9 +374,9 @@ export function evaluateMember(
       maxScore: crit.maxScore,
       confidence,
       confidenceReasons,
-      evidenceCount: evidenceKeys.length,
-      evidenceSummary: `${evidenceKeys.length} verified Jira artifacts evaluated`,
-      ticketKeys: evidenceKeys,
+      evidenceCount: uniqueEvidenceKeys.length,
+      evidenceSummary: `${uniqueEvidenceKeys.length} verified Jira artifacts evaluated`,
+      ticketKeys: uniqueEvidenceKeys,
     };
 
     const isLeaderAdjusted = prevCrit?.isLeaderAdjusted ?? false;
@@ -406,7 +408,7 @@ export function evaluateMember(
       leaderAdjustmentReason,
       isHeadAdjusted,
       headAdjustmentReason,
-      evidenceTickets: evidenceKeys,
+      evidenceTickets: uniqueEvidenceKeys,
       factSnapshots,
       manualEvidenceNotes: prevCrit?.manualEvidenceNotes,
     };
