@@ -1,0 +1,6 @@
+{
+  "name": "KPI Performance Management Studio",
+  "description": "Self-Service Performance Management Platform with configurable KPI templates, automated Jira evidence collection, explainable scoring trace, leader calibration, and immutable historical snapshots.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
